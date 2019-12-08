@@ -3,29 +3,18 @@ pipeline {
         docker { image 'terostech/multi-simulator:1.0.0' }
     }
     stages {
-        stage('Build') {
-            steps {
-                echo 'Building..'
-            }
-        }
-        stage('Test') {
-            parallel(
-            steps {
-                test0: {
-                    echo 'Testing 0..'
-                },
-                test1: {
-                    echo 'Testing 0..'
-                },
-                test2: {
-                    echo 'Testing 0..'
+        stage('Run Tests') {
+            parallel {
+                stage('Test 0') {
+                    steps {
+                        echo "Test 0..."
+                    }
                 }
-            }
-            )
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....'
+                stage('Test 1') {
+                    steps {
+                        sh "Test 1..."
+                    }
+                }
             }
         }
     }
