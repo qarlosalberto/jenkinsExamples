@@ -1,6 +1,7 @@
 pipeline {
-    agent any
-
+    agent {
+        docker { image 'terostech/multi-simulator:1.0.0' }
+    }
     stages {
         stage('Build') {
             steps {
