@@ -9,6 +9,7 @@ pipeline {
             }
         }
         stage('Test') {
+            parallel(
             steps {
                 test0: {
                     echo 'Testing 0..'
@@ -19,6 +20,7 @@ pipeline {
                 test2: {
                     echo 'Testing 0..'
                 }
+            }
             }
         }
         stage('Deploy') {
