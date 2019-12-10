@@ -8,7 +8,8 @@ pipeline {
                 stage('Test 0') {
                     steps {
                         sh '''#!/bin/bash
-                            source /opt/Xilinx/Vivado/2019.2/settings64.sh                         
+                            source /opt/Xilinx/Vivado/2019.2/settings64.sh
+                            vivado -help
                         '''
     
                     }
@@ -17,7 +18,6 @@ pipeline {
                     steps {
                          sh '''#!/bin/bash
                                  echo "hello world" 
-                                 vivado -help
                          '''
                     }
                 }
