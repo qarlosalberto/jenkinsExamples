@@ -7,7 +7,7 @@ pipeline {
             parallel {
                 stage('Test 0') {
                     steps {
-                        echo "hi"
+                        sh "vivado -help"
                     }
                 }
                 stage('Test 1') {
