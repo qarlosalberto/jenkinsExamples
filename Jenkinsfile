@@ -13,9 +13,11 @@ pipeline {
     
                     }
                 }
-                stage('Test 1') {
+                stage('Setting the variables values') {
                     steps {
-                        echo "Test 1..."
+                         bash '''#!/bin/bash
+                                 echo "hello world" 
+                         '''
                     }
                 }
             }
