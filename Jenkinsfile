@@ -1,12 +1,13 @@
 pipeline {
     agent {
-        docker { image 'terostech/multi-simulator:1.0.0' }
+        docker { image 'vivado:2019.2' }
     }
     stages {
         stage('Run Tests') {
             parallel {
                 stage('Test 0') {
                     steps {
+                        vivado -help
                         echo "Test 0..."
                     }
                 }
