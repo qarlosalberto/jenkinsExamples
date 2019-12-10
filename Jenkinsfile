@@ -7,7 +7,7 @@ pipeline {
             parallel {
                 stage('Test 0') {
                     steps {
-                        vivado -help
+                        echo "hi"
                     }
                 }
                 stage('Test 1') {
