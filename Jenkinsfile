@@ -7,7 +7,7 @@ pipeline {
             parallel {
                 stage('Test 0') {
                     steps {
-                        sh "bash /opt/Xilinx/Vivado/2019.2/settings64.sh"
+                        bash "source /opt/Xilinx/Vivado/2019.2/settings64.sh"
                     }
                 }
                 stage('Test 1') {
