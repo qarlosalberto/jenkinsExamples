@@ -7,7 +7,7 @@ pipeline {
             parallel {
                 stage('Test 0') {
                     steps {
-                        bash '''#!/bin/bash
+                        sh '''#!/bin/bash
                             source /opt/Xilinx/Vivado/2019.2/settings64.sh                         
                         '''
     
@@ -15,7 +15,7 @@ pipeline {
                 }
                 stage('Setting the variables values') {
                     steps {
-                         bash '''#!/bin/bash
+                         sh '''#!/bin/bash
                                  echo "hello world" 
                          '''
                     }
