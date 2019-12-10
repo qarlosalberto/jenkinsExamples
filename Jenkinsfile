@@ -17,6 +17,7 @@ pipeline {
                     steps {
                          sh '''#!/bin/bash
                                  echo "hello world" 
+                                 vivado -help
                          '''
                     }
                 }
