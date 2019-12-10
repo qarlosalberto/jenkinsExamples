@@ -8,7 +8,6 @@ pipeline {
                 stage('Test 0') {
                     steps {
                         vivado -help
-                        echo "Test 0..."
                     }
                 }
                 stage('Test 1') {
