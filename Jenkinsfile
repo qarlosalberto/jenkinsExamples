@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        docker { image 'vivado:2019.2' }
+        docker { image 'vivado:2019.2', args '/bin/bash' }
     }
     stages {
         stage('Run Tests') {
