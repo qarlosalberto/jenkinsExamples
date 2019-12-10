@@ -16,7 +16,7 @@ pipeline {
                 }
                 stage('Setting the variables values') {
                     steps {
-                         echo "Test 1.."
+                         sh "vivado -help"
                     }
                 }
             }
