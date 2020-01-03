@@ -1,8 +1,9 @@
 #!/bin/bash
 ################################################################################
 # Arguments:
-#   - 0: ModelSim installation path.
-#   - 1: ModelSim installation file.
+#   - 0: ModelSim installation path. Example: /opt/modelsim/18.0
+#   - 1: ModelSim installation file. Example: ModelSimProSetup-18.0.0.219-linux.run
+#   - 2: If no Docker. Example: user
 ################################################################################
 MODELSIM_PATH=$1
 MODELSIM_INSTALL_FILE=$2
@@ -19,10 +20,15 @@ sudo ./$MODELSIM_INSTALL_FILE --unattendedmodeui none --mode unattended \
                                         --installdir $MODELSIM_PATH --accept_eula 1 \
                                         --modelsim_edition modelsim_ase &
 sleep 3m
-rm -rf /tmp/$MODELSIM_INSTALL_FILE
+
+if [ $USER = "" ]
+then
+  echo "Deleting..."
+  rm -rf /tmp/$MODELSIM_INSTALL_FILE
+fi
 
 echo "+++++++++++ Installing 32-bits libraries..."
-dpkg --add-architecture i386
+sudo dpkg --add-architecture i386
 sudo apt-get -qq update
 sudo apt-get install -y libxft2 lib32ncurses5 libxft2:i386 libxext6:i386
 
@@ -31,8 +37,8 @@ sudo ln -s linuxaloem linuxpe
 sudo ln -s linuxaloem linux_x86_64pe
 sudo chmod +r+w -R $MODELSIM_PATH
 
-echo 'export VUNIT_MODELSIM_INI='$MODELSIM_PATH'/modelsim_ase/modelsim.ini' >> sudo /etc/bash.bashrc
-echo 'export VUNIT_MODELSIM_PATH='$MODELSIM_PATH'/modelsim_ase/linuxaloem' >> sudo /etc/bash.bashrc
-echo 'PATH=$PATH:'$MODELSIM_PATH'/modelsim_ase/linuxaloem' >> sudo /etc/bash.bashrc
+echo 'export VUNIT_MODELSIM_INI='$MODELSIM_PATH'/modelsim_ase/modelsim.ini' | sudo tee -a /etc/bash.bashrc
+echo 'export VUNIT_MODELSIM_PATH='$MODELSIM_PATH'/modelsim_ase/linuxaloem' | sudo tee -a /etc/bash.bashrc
+echo 'PATH=$PATH:'$MODELSIM_PATH'/modelsim_ase/linuxaloem' | sudo tee -a /etc/bash.bashrc
 
 exit

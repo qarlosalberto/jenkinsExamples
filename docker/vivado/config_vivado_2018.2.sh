@@ -21,7 +21,7 @@ CreateProgramGroupShortcuts=1
 # Choose the name of the Start menu/Application menu shortcut. This setting will be ignored if you choose NOT to create shortcuts.
 ProgramGroupFolder=Xilinx Design Tools
 # Choose whether shortcuts will be created for All users or just the Current user. Shortcuts can be created for all users only if you run the installer as administrator.
-CreateShortcutsForAllUsers=0
+CreateShortcutsForAllUsers=1
 # Choose whether shortcuts will be created on the desktop or not.
 CreateDesktopShortcuts=1
 # Choose whether file associations will be created or not.
