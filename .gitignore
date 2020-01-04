@@ -18,3 +18,4 @@ vunit_out
 *.vstf
 out.xml
 modelsim.ini
+*.csv

@@ -1,4 +1,4 @@
-fft# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 from os.path import join , dirname, abspath
 import subprocess
 from vunit.ghdl_interface import GHDLInterface
@@ -11,10 +11,8 @@ import sys
 ##############################################################################
 
 #pre_check func
-def make_pre_check():
-  """
-  Before test.
-  """
+def make_pre_check(fft_size):
+    print(str(fft_size))
 #post_check func
 def make_post_check():
   """
@@ -91,6 +89,19 @@ add_vivado_ip(ui, output_path=join(root, "vivado_libs"), project_file=join(root,
 #Add tb sources.
 fft_tb_lib = ui.add_library("tb_lib")
 fft_tb_lib.add_source_files("fft_tb.vhd")
+
+#func precheck
+tb_generated = fft_tb_lib.entity("xfft_0_tb")
+
+tb_path       = "./"
+g_FFT_SIZE = [64]
+for test in tb_generated.get_tests():
+    for i in range(0,len(g_FFT_SIZE)):
+        test.add_config(name=str(g_FFT_SIZE[i]),
+        pre_config=make_pre_check(g_FFT_SIZE[i]),
+        generics=dict(g_NAME_TEST=str(g_FFT_SIZE[i]),g_FFT_SIZE=g_FFT_SIZE[i],tb_path=tb_path),
+        post_check=make_post_check())
+
 
 ##############################################################################
 ##############################################################################
