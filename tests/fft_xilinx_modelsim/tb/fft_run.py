@@ -53,8 +53,8 @@ print ("=============================================")
 #VUnit instance.
 ui = VUnit.from_argv()
 
-reload(sys)
-sys.setdefaultencoding('utf8')
+# reload(sys)
+# sys.setdefaultencoding('utf8')
 
 #UVVM libraries path.
 if (simname=="ghdl" or simname=="GHDL"):
