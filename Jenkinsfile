@@ -10,7 +10,7 @@ pipeline {
                         echo "Test 0.."
                         sh '''
                             #!/bin/bash
-                            printenv SHELL
+                            echo $SHELL
                             echo "Multiline shell steps works too"
                             ls -lah
                         '''
