@@ -9,6 +9,7 @@ pipeline {
                     steps {
                         echo "Test 0.."
                         sh '''
+                            source /opt/Xilinx/Vivado/2018.2/settings64.sh
                             echo "Multiline shell steps works too"
                             ls -lah
                         '''
