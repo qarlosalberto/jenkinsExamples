@@ -17,7 +17,7 @@ pipeline {
                             export VUNIT_MODELSIM_INI=/opt/modelsim/18.0/modelsim_ase/modelsim.ini
                             export VUNIT_MODELSIM_PATH=/opt/modelsim/18.0/modelsim_ase/linuxaloem
                             cd tb
-                            python fft_run.py
+                            python3 fft_run.py
                         '''
                     }
                 }
