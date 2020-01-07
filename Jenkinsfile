@@ -11,7 +11,7 @@ pipeline {
                         sh '''#!/bin/bash
                             source --help
                             source /opt/Xilinx/Vivado/2018.2/settings64.sh
-                            cd /tests/fft_xilinx_modelsim
+                            cd tests/fft_xilinx_modelsim
                             vivado -mode batch -source vivado_project.tcl
                         '''
                     }
