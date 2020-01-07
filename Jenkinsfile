@@ -10,6 +10,7 @@ pipeline {
                         echo "Test 0.."
                         sh '''
                             #!/bin/bash
+                            source /fpga/Xilinx/Vivado/2018.2/settings64.sh
                             vivado -help
                             cd tests/fft_xilinx_modelsim/
                             vivado -mode batch -source vivado_project.tcl
