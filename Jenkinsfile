@@ -13,6 +13,11 @@ pipeline {
                             source /opt/Xilinx/Vivado/2018.2/settings64.sh
                             cd tests/fft_xilinx_modelsim
                             vivado -mode batch -source vivado_project.tcl
+                            export MODELSIM_PATH=/opt/modelsim/18.0
+                            export VUNIT_MODELSIM_INI=/opt/modelsim/18.0/modelsim_ase/modelsim.ini
+                            export VUNIT_MODELSIM_PATH=/opt/modelsim/18.0/modelsim_ase/linuxaloem
+                            cd tb
+                            python fft_run.py
                         '''
                     }
                 }
