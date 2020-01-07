@@ -9,6 +9,7 @@ pipeline {
                     steps {
                         echo "Test 0.."
                         sh '''#!/bin/bash
+                            source --help
                             echo $HOME
                             echo $USER
                             echo $VUNIT_MODELSIM_INI
