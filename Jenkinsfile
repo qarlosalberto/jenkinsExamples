@@ -10,7 +10,9 @@ pipeline {
                         echo "Test 0.."
                         sh '''
                             #!/bin/bash
-                            echo $SHELL
+                            echo $HOME
+                            echo $USER
+                            echo $VUNIT_MODELSIM_INI
                             echo "Multiline shell steps works too"
                             ls -lah
                         '''
