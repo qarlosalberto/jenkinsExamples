@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        docker { image 'modelsim:1.0.0'
+        docker { image 'vivado:2018.2'
                  args '/bin/bash'
                }
     }
