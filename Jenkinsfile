@@ -8,8 +8,7 @@ pipeline {
                 stage('Test 0') {
                     steps {
                         echo "Test 0.."
-                        sh '''
-                            #!/bin/bash
+                        bash '''#!/bin/bash
                             echo $HOME
                             echo $USER
                             echo $VUNIT_MODELSIM_INI
