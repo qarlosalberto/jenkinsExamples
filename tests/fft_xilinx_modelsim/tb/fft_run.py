@@ -34,10 +34,6 @@ def make_post_check(name_test,fft_size):
 
 #Check GHDL backend.
 code_coverage=False
-if( GHDLInterface.determine_backend("")=="gcc" or  GHDLInterface.determine_backend("")=="GCC"):
-  code_coverage=True
-else:
-  code_coverage=False
 
 #Check simulator.
 print ("=============================================")
@@ -129,9 +125,6 @@ except SystemExit as exc:
 
 #Code coverage.
 if all_ok:
-  if(code_coverage==True and simname == "ghdl"):
-    pass
-  else:
     exit(0)
 else:
-  exit(1)
+    exit(1)
