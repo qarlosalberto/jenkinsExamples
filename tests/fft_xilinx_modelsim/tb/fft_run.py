@@ -5,20 +5,25 @@ from vunit.ghdl_interface import GHDLInterface
 from vunit.simulator_factory import SIMULATOR_FACTORY
 from vunit   import VUnit, VUnitCLI
 from vivado_util import add_vivado_ip
+import numpy as np
 import sys
 ##############################################################################
 ##############################################################################
 ##############################################################################
 
 #pre_check func
-def make_pre_check(fft_size):
-    print(str(fft_size))
+def make_pre_check(name_test,fft_size):
+    MAX = 1000000
+    input = np.random.randint(MAX, size=fft_size)
+    np.savetxt(name_test + '_input' + '.csv', input, delimiter=',',fmt='%1d')
 #post_check func
-def make_post_check():
+def make_post_check(name_test,fft_size):
   """
   After test.
   """
   def post_check(output_path):
+    out0VHDL = np.loadtxt(name_test + "_out0_vhdl" + ".csv",dtype=int,delimiter=',')
+    out1VHDL = np.loadtxt(name_test + "_out1_vhdl" + ".csv",dtype=int,delimiter=',')
     check = True
     return check
   return post_check
@@ -97,10 +102,11 @@ tb_path       = "./"
 g_FFT_SIZE = [64]
 for test in tb_generated.get_tests():
     for i in range(0,len(g_FFT_SIZE)):
-        test.add_config(name=str(g_FFT_SIZE[i]),
-        pre_config=make_pre_check(g_FFT_SIZE[i]),
-        generics=dict(g_NAME_TEST=str(g_FFT_SIZE[i]),g_FFT_SIZE=g_FFT_SIZE[i],tb_path=tb_path),
-        post_check=make_post_check())
+        name_test = "fft" + str(g_FFT_SIZE[i])
+        test.add_config(name=str(name_test),
+        pre_config=make_pre_check(name_test,g_FFT_SIZE[i]),
+        generics=dict(g_NAME_TEST=name_test,g_FFT_SIZE=g_FFT_SIZE[i],tb_path=tb_path),
+        post_check=make_post_check(name_test,g_FFT_SIZE[i]))
 
 
 ##############################################################################

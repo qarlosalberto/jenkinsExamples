@@ -49,6 +49,9 @@ architecture bench of xfft_0_tb is
   signal event_data_in_channel_halt : std_logic;
   --
   constant c_FFT_SIZE_LOG2 : integer := integer(ceil(log2(real(g_FFT_SIZE))));
+  --
+  signal start_input : boolean := false;
+  signal end_input   : boolean := false;
 begin
 
   xfft_0_inst : entity xil_defaultlib.xfft_0
@@ -73,7 +76,6 @@ begin
     );
 
   main : process
-    variable sample_counter : integer := 0;
   begin
     test_runner_setup(runner, runner_cfg);
     while test_suite loop
@@ -85,9 +87,6 @@ begin
         aresetn <= '0';
         s_axis_config_tdata  <= (OTHERS => '0');
         s_axis_config_tvalid <= '0';
-        s_axis_data_tdata    <= (OTHERS => '0');
-        s_axis_data_tvalid   <= '0';
-        s_axis_data_tlast    <= '0';
         wait for 20*clk_period;
         aresetn <= '1';
         wait for 20*clk_period;
@@ -107,26 +106,47 @@ begin
         ------------------------------------------------------------------------
         -- Data
         ------------------------------------------------------------------------
-        identifier : while sample_counter < g_FFT_SIZE loop
-          -- s_axis_data_tdata  <= std_logic_vector(to_unsigned(sample_counter,s_axis_data_tdata'length));
-          s_axis_data_tdata  <= std_logic_vector(to_unsigned(33666333,s_axis_data_tdata'length));
-          s_axis_data_tvalid <= '1';
-          if (sample_counter = 63) then
-            s_axis_data_tlast  <= '1';
-          end if;
-          if (s_axis_data_tready = '1')  then
-            sample_counter := sample_counter + 1;
-          end if;
-          wait for 1*clk_period;
-        end loop;
-        s_axis_data_tvalid <= '0';
-        s_axis_data_tlast  <= '0';
-        wait for 500*clk_period;
+        wait for clk_period*1;
+        start_input <= true;
+        wait for clk_period*1;
+        wait until (end_input = true);
+        --
+        wait for 10*g_FFT_SIZE*clk_period;
 
         test_runner_cleanup(runner);
       end if;
     end loop;
   end process main;
+
+  input : process
+    variable input_data : array_t;
+    variable input_data_int : integer;
+    variable sample_counter : integer := 0;
+  begin
+    s_axis_data_tdata  <= (OTHERS => '0');
+    s_axis_data_tvalid <= '0';
+    s_axis_data_tlast  <= '0';
+    input_data.load_csv(tb_path & g_NAME_TEST & "_input" & ".csv");
+    wait until (start_input = true);
+    wait until (rising_edge(aclk));
+    -- Inputs
+    input_array : while sample_counter < input_data.length-1 loop
+      s_axis_data_tdata  <= std_logic_vector(to_unsigned(input_data.get(sample_counter),
+                                                            s_axis_data_tdata'length));
+      s_axis_data_tvalid <= '1';
+      if (sample_counter = input_data.length-1-1) then
+        s_axis_data_tlast  <= '1';
+      end if;
+      if (s_axis_data_tready = '1')  then
+        sample_counter := sample_counter + 1;
+      end if;
+      wait for 1*clk_period;
+    end loop;
+    s_axis_data_tvalid <= '0';
+    s_axis_data_tlast  <= '0';
+    end_input <= true;
+  end process;
+
 
   output : process
     variable data_0_outputs : array_t;
@@ -150,11 +170,9 @@ begin
       data_1_outputs.set(i,data_1_out_int);
       wait for 1*clk_period;
     end loop;
-    data_0_outputs.save_csv(tb_path & "out0_vhdl_" & g_NAME_TEST &".csv");
-    data_1_outputs.save_csv(tb_path & "out1_vhdl_" & g_NAME_TEST &".csv");
+    data_0_outputs.save_csv(tb_path & g_NAME_TEST & "_out0_vhdl" & ".csv");
+    data_1_outputs.save_csv(tb_path & g_NAME_TEST & "_out1_vhdl" & ".csv");
   end process;
-
-
 
   clk_process : process
   begin
