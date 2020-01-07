@@ -11,4 +11,4 @@ COPY ./config_vivado_${VIVADO_VERSION}.sh /tmp/config_vivado_${VIVADO_VERSION}.s
 COPY ./${VIVADO_TAR_FILE}.tar.gz /tmp/${VIVADO_TAR_FILE}.tar.gz
 
 RUN cd /tmp ;chmod 777 ./config_vivado_${VIVADO_VERSION}.sh; sync; ./config_vivado_${VIVADO_VERSION}.sh ${XILINX_PATH} ${VIVADO_VERSION}
-RUN cd /tmp ;chmod 777 ./install.sh; sync; ./install.sh ${XILINX_PATH} ${VIVADO_VERSION} ${VIVADO_TAR_FILE}
+RUN cd /tmp ;chmod 777 ./install.sh; sync; ./install.sh ${XILINX_PATH} ${VIVADO_VERSION} ${VIVADO_TAR_FILE} none

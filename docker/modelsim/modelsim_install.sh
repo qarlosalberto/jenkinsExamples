@@ -3,7 +3,6 @@
 # Arguments:
 #   - 0: ModelSim installation path. Example: /opt/modelsim/18.0
 #   - 1: ModelSim installation file. Example: ModelSimProSetup-18.0.0.219-linux.run
-#   - 2: If no Docker. Example: user
 ################################################################################
 MODELSIM_PATH=$1
 MODELSIM_INSTALL_FILE=$2
@@ -21,12 +20,6 @@ sudo ./$MODELSIM_INSTALL_FILE --unattendedmodeui none --mode unattended \
                                         --modelsim_edition modelsim_ase &
 sleep 3m
 
-if [ $USER = "" ]
-then
-  echo "Deleting..."
-  rm -rf /tmp/$MODELSIM_INSTALL_FILE
-fi
-
 echo "+++++++++++ Installing 32-bits libraries..."
 sudo dpkg --add-architecture i386
 sudo apt-get -qq update
@@ -40,5 +33,8 @@ sudo chmod +r+w -R $MODELSIM_PATH
 echo 'export VUNIT_MODELSIM_INI='$MODELSIM_PATH'/modelsim_ase/modelsim.ini' | sudo tee -a /etc/bash.bashrc
 echo 'export VUNIT_MODELSIM_PATH='$MODELSIM_PATH'/modelsim_ase/linuxaloem' | sudo tee -a /etc/bash.bashrc
 echo 'PATH=$PATH:'$MODELSIM_PATH'/modelsim_ase/linuxaloem' | sudo tee -a /etc/bash.bashrc
+
+echo "Deleting..."
+rm -rf /tmp/$MODELSIM_INSTALL_FILE
 
 exit
