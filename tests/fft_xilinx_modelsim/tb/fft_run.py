@@ -40,15 +40,15 @@ else:
   code_coverage=False
 
 #Check simulator.
-print "============================================="
+print ("=============================================")
 simulator_class = SIMULATOR_FACTORY.select_simulator()
 simname = simulator_class.name
-print simname
+print (simname)
 if (simname == "modelsim"):
   f= open("modelsim.do","w+")
   f.write("add wave * \nlog -r /*\nvcd file\nvcd add -r /*\n")
   f.close()
-print "============================================="
+print ("=============================================")
 
 ##############################################################################
 ##############################################################################
