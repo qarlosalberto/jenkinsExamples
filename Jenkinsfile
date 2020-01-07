@@ -10,6 +10,7 @@ pipeline {
                         echo "Test 0.."
                         sh '''#!/bin/bash
                             source --help
+                            vivado -help
                             echo $HOME
                             echo $USER
                             echo $VUNIT_MODELSIM_INI
